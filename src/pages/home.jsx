@@ -3,22 +3,27 @@ import 'flowbite'
 import logo from '../assets/necleo.svg'
 import profile from '../assets/profile.svg'
 import arrow from '../assets/down-arrow.png'
-import add from '../assets/add.svg'
 
+const API = 'https://picsum.photos/v2/list?page=1&limit=6';
 const home = () => {
-    const [info, setInfo] = useState([]);
-    useEffect(() => {
-        apiCall();
-    }, []);
-    const apiCall = async () => {
-        const data = fetch('https://picsum.photos/v2/list?page=1&limit=6');
-        // const json = data.json();
-        setInfo(data);
-    };
+
+    const fetchimage = async (url) =>{
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            console.log(data);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    useEffect(()=>{
+        fetchimage(API);
+    },[]);
 
     return (
         <div>
-            {(console.log(info))}
+           
             {/* Navbar */}
 
 
