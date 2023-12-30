@@ -229,7 +229,7 @@ const home = () => {
                     <div className='text-xl flex items-center'>
                         <h1 className='flex py-10 font-bold text-4xl items-center'>My Projects</h1>
                     </div>
-                    <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-1 gap-4 mb-2 xl:grid xl:grid-cols-3 xl:gap-4 xl:mb-4">
                         {/* create new */}
                         <Link to='/new' class="flex flex-col gap-5 items-center justify-center h-80 rounded bg-orange-200">
                             <p class="text-2xl text-gray-400 dark:text-gray-800">
@@ -247,13 +247,13 @@ const home = () => {
                                     </defs>
                                 </svg>
                             </p>
-                            <h3>Create a new project</h3>
+                            <h3 className='text-orange-500 font-bold'>Create a new project</h3>
                         </Link>
                         {/* image1 */}
                         {
                             images.map((image) => {
                                 return (
-                                    <div class="flex flex-col items-center justify-center h-80 rounded bg-black">
+                                    <div class="flex flex-col items-center justify-center h-80 rounded bg-black ">
                                         <p class="text-2xl text-gray-400">
                                             {got ? <img src={image?.download_url}
 
