@@ -6,7 +6,7 @@ import arrow from '../assets/down-arrow.png'
 import { Link } from 'react-router-dom'
 
 const API = 'https://picsum.photos/v2/list?page=1&limit=6';
-const home = () => {
+const home = ({setInfo, info}) => {
 
     const [images, setimages] = useState([]);
     const [got, setGot] = useState(false);
@@ -19,79 +19,66 @@ const home = () => {
                 setimages(data);
             if (images)
                 setGot(true);
-            console.log(data);
         } catch (e) {
             console.error(e);
         }
     };
 
-    function showImage() {
-        return image.map((img, index) => (
-            <Image
-                image={img.url}
-                handleRemove={handleRemove}
-                index={index}
-                key={index}
-            />
-        ));
-    }
-
     useEffect(() => {
         fetchimage(API);
+        setInfo(JSON.parse(localStorage.getItem('newcards')) || []);
     }, []);
 
     return (
         <div>
 
             {/* Navbar */}
-
-
-            <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                <div class="px-3 py-3 lg:px-5 lg:pl-3">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center justify-start rtl:justify-end">
-                            <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                                <span class="sr-only">Open sidebar</span>
-                                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+            <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                <div className="px-3 py-3 lg:px-5 lg:pl-3">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-start rtl:justify-end">
+                            <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                                <span className="sr-only">Open sidebar</span>
+                                <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                                 </svg>
                             </button>
-                            <a href="/" class="flex ms-2 md:me-24">
+                            <a href="/" className="flex ms-2 md:me-24">
                                 <img className='px-14' src={logo} alt="logo" />
 
                             </a>
                         </div>
-                        <div class="flex items-center">
-                            <div class="flex items-center ms-3">
+                        <div className="flex items-center">
+                            <div className="flex items-center ms-3">
                                 <h5 className='hidden sm:block text-xs px-4 mb-2'>Free&nbsp;Trial&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;2days left </h5>
                                 <div className='px-8'>
-                                    <button type="button" class="flex items-center text-sm bg-white-800 rounded-full" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                                        <span class="sr-only">Open user menu</span>
-                                        <img class="w-8 h-8 rounded-full mr-2" src={profile} alt="user photo" />
+                                    <button type="button" className="flex items-center text-sm bg-white-800 rounded-full" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                        <span className="sr-only">Open user menu</span>
+                                        <img className="w-8 h-8 rounded-full mr-2" src={profile} alt="user photo" />
                                         <img src={arrow} className='w-2' />
                                     </button>
                                 </div>
-                                <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-                                    <div class="px-4 py-3" role="none">
-                                        <p class="text-sm text-gray-900 dark:text-white" role="none">
+                                <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+                                    <div className="px-4 py-3" role="none">
+                                        <p className="text-sm text-gray-900 dark:text-white" role="none">
                                             Sagnik Saha
                                         </p>
-                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                        <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
                                             sagnik12347@gmail.com
                                         </p>
                                     </div>
-                                    <ul class="py-1" role="none">
+                                    <ul className="py-1" role="none">
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">My Projects</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">My Projects</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sample Projects</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sample Projects</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -104,12 +91,12 @@ const home = () => {
             {/* Sidebar */}
 
 
-            <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
-                <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-                    <ul class="space-y-2 font-medium">
+            <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+                <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+                    <ul className="space-y-2 font-medium">
                         <li>
-                            <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="9055184_bxs_coin_stack_icon 1">
                                         <path id="Vector" d="M14 11.6666C18.6386 11.6666 23.3333 10.0636 23.3333 6.99998C23.3333 3.93631 18.6386 2.33331 14 2.33331C9.36129 2.33331 4.66663 3.93631 4.66663 6.99998C4.66663 10.0636 9.36129 11.6666 14 11.6666Z" fill="#FA782F" />
                                         <path id="Vector_2" d="M4.66663 11.6666C4.66663 14.7303 9.36129 16.3333 14 16.3333C18.6386 16.3333 23.3333 14.7303 23.3333 11.6666V9.33331C23.3333 12.397 18.6386 14 14 14C9.36129 14 4.66663 12.397 4.66663 9.33331V11.6666Z" fill="#FA782F" />
@@ -117,12 +104,12 @@ const home = () => {
                                         <path id="Vector_4" d="M4.66663 21C4.66663 24.0637 9.36129 25.6667 14 25.6667C18.6386 25.6667 23.3333 24.0637 23.3333 21V18.6667C23.3333 21.7304 18.6386 23.3334 14 23.3334C9.36129 23.3334 4.66663 21.7304 4.66663 18.6667V21Z" fill="#FA782F" />
                                     </g>
                                 </svg>
-                                <span class="ms-3 text-orange-500">My Projects</span>
+                                <span className="ms-3 text-orange-500">My Projects</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="Group 4">
                                         <g id="Vector">
                                             <path d="M12.5902 5.41804C12.5902 2.70188 14.792 0.5 17.5082 0.5H23.8033C23.9119 0.5 24 0.588075 24 0.696721V6.9918C24 9.70795 21.7981 11.9098 19.082 11.9098H12.5902V5.41804Z" fill="#C4C4C4" />
@@ -132,15 +119,15 @@ const home = () => {
                                         </g>
                                     </g>
                                 </svg>
-                                <span class="flex-1 ms-3 whitespace-nowrap">Sample Projects</span>
+                                <span className="flex-1 ms-3 whitespace-nowrap">Sample Projects</span>
 
                             </a>
                         </li>
                         <div className='below-content flex flex-col justify-between h-[72vh]'>
                             <div className="below-top-sidebar-content">
                                 <li>
-                                    <div class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700" />
-                                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <div className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700" />
+                                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g id="8674394_ic_fluent_apps_regular_icon 1">
                                                 <g id="Vector">
@@ -149,13 +136,13 @@ const home = () => {
                                                 </g>
                                             </g>
                                         </svg>
-                                        <span class="flex-1 ms-3 whitespace-nowrap">Apps</span>
+                                        <span className="flex-1 ms-3 whitespace-nowrap">Apps</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <g id="6127246_multimedia_music_play_player_video_icon 1" clip-path="url(#clip0_101_35)">
+                                            <g id="6127246_multimedia_music_play_player_video_icon 1" clipPath="url(#clip0_101_35)">
                                                 <g id="Layer 2">
                                                     <g id="Interface-Solid">
                                                         <g id="interface-solid-multimedia-play-button">
@@ -170,14 +157,14 @@ const home = () => {
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                        <span class="flex-1 ms-3 whitespace-nowrap">Intro to Nucleo</span>
+                                        <span className="flex-1 ms-3 whitespace-nowrap">Intro to Nucleo</span>
                                     </a>
                                 </li>
                             </div>
 
-                            <div class="below-bottom-sidebar-content">
+                            <div className="below-bottom-sidebar-content">
                                 <li>
-                                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g id="211674_help_circled_icon 1">
                                                 <g id="Group">
@@ -185,13 +172,13 @@ const home = () => {
                                                 </g>
                                             </g>
                                         </svg>
-                                        <span class="flex-1 ms-3 whitespace-nowrap">Help & Support</span>
+                                        <span className="flex-1 ms-3 whitespace-nowrap">Help & Support</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <g id="3669434_feedback_ic_icon (1) 1" clip-path="url(#clip0_101_48)">
+                                            <g id="3669434_feedback_ic_icon (1) 1" clipPath="url(#clip0_101_48)">
                                                 <path id="Vector" d="M23.3334 2.33333H4.66671C3.37754 2.33333 2.34504 3.37749 2.34504 4.66666L2.33337 25.6667L7.00004 21H23.3334C24.6225 21 25.6667 19.9558 25.6667 18.6667V4.66666C25.6667 3.37749 24.6225 2.33333 23.3334 2.33333ZM15.1667 16.3333H12.8334V14H15.1667V16.3333ZM15.1667 11.6667H12.8334V7H15.1667V11.6667Z" fill="#C4C4C4" />
                                             </g>
                                             <defs>
@@ -200,17 +187,17 @@ const home = () => {
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                        <span class="flex-1 ms-3 whitespace-nowrap">Feedback</span>
+                                        <span className="flex-1 ms-3 whitespace-nowrap">Feedback</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g id="8686063_ic_fluent_panel_right_expand_icon 1">
                                                 <path id="Vector" d="M9.54941 14.7L10.9473 15.9232C11.2383 16.1778 11.2678 16.62 11.0132 16.911C10.7586 17.2019 10.3164 17.2313 10.0254 16.9768L7.22542 14.5268C7.07351 14.394 6.98637 14.2019 6.98637 14C6.98637 13.7982 7.07351 13.6061 7.22542 13.4732L10.0254 11.0232C10.3164 10.7686 10.7586 10.7981 11.0132 11.0891C11.2678 11.38 11.2383 11.8222 10.9473 12.0768L9.54938 13.3H14.7C15.0866 13.3 15.4 13.6134 15.4 14C15.4 14.3867 15.0866 14.7 14.7 14.7H9.54941ZM25.2001 19.6C25.2001 21.1464 23.9465 22.4 22.4001 22.4H5.60005C4.05365 22.4 2.80005 21.1464 2.80005 19.6V8.40001C2.80005 6.85361 4.05365 5.60001 5.60005 5.60001H22.4001C23.9465 5.60001 25.2001 6.85361 25.2001 8.40001V19.6ZM16.8 21V7.00001H5.60005C4.82686 7.00001 4.20005 7.6268 4.20005 8.40001V19.6C4.20005 20.3732 4.82686 21 5.60005 21H16.8Z" fill="#212121" />
                                             </g>
                                         </svg>
-                                        <span class="flex-1 ms-3 whitespace-nowrap">Collapse</span>
+                                        <span className="flex-1 ms-3 whitespace-nowrap">Collapse</span>
                                     </a>
                                 </li>
                             </div>
@@ -223,18 +210,18 @@ const home = () => {
 
 
             {/* body */}
-            <div class="p-4 sm:ml-64">
+            <div className="p-4 sm:ml-64">
 
-                <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14">
+                <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14">
                     <div className='text-xl flex items-center'>
                         <h1 className='flex py-10 font-bold text-4xl items-center'>My Projects</h1>
                     </div>
-                    <div class="grid grid-cols-1 gap-4 mb-2 xl:grid xl:grid-cols-3 xl:gap-4 xl:mb-4">
+                    <div className="grid grid-cols-1 gap-4 mb-2 xl:grid xl:grid-cols-3 xl:gap-4 xl:mb-4">
                         {/* create new */}
-                        <Link to='/new' class="flex flex-col gap-5 items-center justify-center h-80 rounded bg-orange-200">
-                            <p class="text-2xl text-gray-400 dark:text-gray-800">
+                        <Link to='/new' className="flex flex-col gap-5 items-center justify-center h-80 rounded bg-orange-200">
+                            <p className="text-2xl text-gray-400 dark:text-gray-800">
                                 <svg width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="9224390_add_plus_new_create_control_icon 1" clip-path="url(#clip0_101_14)">
+                                    <g id="9224390_add_plus_new_create_control_icon 1" clipPath="url(#clip0_101_14)">
                                         <g id="20. Add">
                                             <path id="Vector" d="M37.5417 17.6667C41.4744 17.6608 45.3193 18.8297 48.5833 21.0233V8.83333C48.5833 6.49059 47.6527 4.24379 45.9961 2.58722C44.3395 0.930652 42.0927 0 39.75 0L8.83333 0C6.49059 0 4.24379 0.930652 2.58722 2.58722C0.930652 4.24379 0 6.49059 0 8.83333L0 39.75C0 42.0927 0.930652 44.3395 2.58722 45.9961C4.24379 47.6527 6.49059 48.5833 8.83333 48.5833H21.0233C19.0242 45.5913 17.8749 42.1126 17.698 38.5185C17.5211 34.9243 18.3234 31.3496 20.0192 28.1757C21.7149 25.0019 24.2405 22.3479 27.3266 20.4971C30.4126 18.6463 33.9432 17.668 37.5417 17.6667Z" fill="white" />
                                             <path id="Vector_2" d="M37.5416 22.0833C34.4842 22.0833 31.4955 22.99 28.9534 24.6885C26.4113 26.3871 24.43 28.8014 23.26 31.626C22.0899 34.4507 21.7838 37.5588 22.3803 40.5574C22.9767 43.5561 24.449 46.3105 26.6109 48.4724C28.7728 50.6343 31.5272 52.1065 34.5258 52.703C37.5244 53.2994 40.6326 52.9933 43.4572 51.8233C46.2819 50.6533 48.6961 48.672 50.3947 46.1299C52.0933 43.5878 52.9999 40.599 52.9999 37.5417C52.9953 33.4433 51.3651 29.5141 48.4671 26.6161C45.5691 23.7182 41.64 22.088 37.5416 22.0833ZM41.9583 39.75H39.7499V41.9583C39.7499 42.544 39.5173 43.1057 39.1031 43.5199C38.689 43.934 38.1273 44.1667 37.5416 44.1667C36.9559 44.1667 36.3942 43.934 35.9801 43.5199C35.5659 43.1057 35.3333 42.544 35.3333 41.9583V39.75H33.1249C32.5392 39.75 31.9775 39.5173 31.5634 39.1032C31.1493 38.6891 30.9166 38.1274 30.9166 37.5417C30.9166 36.956 31.1493 36.3943 31.5634 35.9801C31.9775 35.566 32.5392 35.3333 33.1249 35.3333H35.3333V33.125C35.3333 32.5393 35.5659 31.9776 35.9801 31.5635C36.3942 31.1493 36.9559 30.9167 37.5416 30.9167C38.1273 30.9167 38.689 31.1493 39.1031 31.5635C39.5173 31.9776 39.7499 32.5393 39.7499 33.125V35.3333H41.9583C42.5439 35.3333 43.1056 35.566 43.5198 35.9801C43.9339 36.3943 44.1666 36.956 44.1666 37.5417C44.1666 38.1274 43.9339 38.6891 43.5198 39.1032C43.1056 39.5173 42.5439 39.75 41.9583 39.75Z" fill="white" />
@@ -253,24 +240,46 @@ const home = () => {
                         {
                             images.map((image) => {
                                 return (
-                                    <div class="flex flex-col items-center justify-center h-80 rounded bg-black ">
-                                        <p class="text-2xl text-gray-400">
+                                    <div className="flex flex-col items-center justify-center h-80 rounded bg-black ">
+                                        <p className="text-2xl text-gray-400">
                                             {got ? <img src={image?.download_url}
 
                                             /> :
-                                                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                                                 </svg>
                                             }
                                         </p>
-                                        <div class="flex flex-row text-md text-gray-400">
+                                        <div className="flex flex-row text-md text-gray-400">
                                             <h3>{image?.author}</h3>
                                         </div>
                                     </div>
                                 )
                             })
                         }
+                        {
+                            info.map((x)=>{
+                                localStorage.setItem("newcards",JSON.stringify(info));
+                                return (
+                                    <Link to={`card/${x.id}`} >
+                                    <div className="flex flex-col items-center justify-center h-80 rounded bg-black ">
+                                        <p className="text-2xl text-gray-400">
+                                            {got ? <img src={x.url}
 
+                                            /> :
+                                                <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                                                </svg>
+                                            }
+                                        </p>
+                                        <div className="flex flex-row text-md text-gray-400">
+                                            <h3>{x.author}</h3>
+                                        </div>
+                                    </div>
+                                    </Link>
+                                )
+                            })
+                        }
                     </div>
 
                 </div>
